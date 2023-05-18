@@ -2,14 +2,12 @@ import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import moment from "moment";
-import Form from "../Form/Form";
 
 const Dashbaord = () => {
   const navigate = useNavigate();
   const [data, setData] = useState([]);
   const [ind, setInd] = useState(null);
   const [isClick, setClick] = useState(false);
-  const [filter, setFilter] = useState("");
   const [requestedUSerToUpdate, setRequestedUSerToUpdate] = useState([]);
   const [formData, setFormData] = useState({
     firstname: "",
@@ -40,6 +38,7 @@ const Dashbaord = () => {
     e.preventDefault();
     let data = JSON.parse(localStorage.getItem("userdata"));
     data = data.map((user, i) => {
+      // eslint-disable-next-line
       if (i == ind) {
         return formData;
       } else {
@@ -55,13 +54,6 @@ const Dashbaord = () => {
     setRequestedUSerToUpdate(item);
     setInd(index);
   };
-  const [valueLength, setValueLength] = useState(0);
-
-  useEffect(() => {
-    const value = localStorage.getItem('filter');
-    console.log('value😎', value)
-    setValueLength(value ? value.length : 0);
-  }, []);
 
   return (
     <>
@@ -84,43 +76,34 @@ const Dashbaord = () => {
             </tr>
           </thead>
           <tbody>
-            {data
-              ? (filter
-                  ? data.filter(
-                      (item) =>
-                        item.firstname.includes(filter) ||
-                        item.lastname.includes(filter)
-                    )
-                  : data
-                ).map((item, index) => (
-                  <tr>
-                    <th scope="row">{index + 1}</th>
-                    <td>{item.firstname + " " + item.lastname}</td>
-                    <td>{moment(item.dob).format("MM/DD/YYYY")}</td>
-                    <td>{item.contactnum}</td>
-                    <td>{item.gender}</td>
-                    <td>
-                      <Link to={`/view/${index + 1}`}>
-                        <i className="fa-sharp fa-solid fa-eye"></i>
-                      </Link>
-                    </td>
-                    <td>
-                      <i
-                        type="submit"
-                        className="fa-solid fa-pen-to-square"
-                        onClick={() => handleupdate(item, index + 1)}
-                      ></i>
-                    </td>
-                    <td>
-                      <i
-                        type="submit"
-                        className="fa-sharp fa-solid fa-trash"
-                        onClick={() => handledelete(index)}
-                      ></i>
-                    </td>
-                  </tr>
-                ))
-              : null}
+            {data.map((item, index) => (
+              <tr>
+                <th scope="row">{index + 1}</th>
+                <td>{item.firstname + " " + item.lastname}</td>
+                <td>{moment(item.dob).format("MM/DD/YYYY")}</td>
+                <td>{item.contactnum}</td>
+                <td>{item.gender}</td>
+                <td>
+                  <Link to={`/view/${index + 1}`}>
+                    <i className="fa-sharp fa-solid fa-eye"></i>
+                  </Link>
+                </td>
+                <td>
+                  <i
+                    type="submit"
+                    className="fa-solid fa-pen-to-square"
+                    onClick={() => handleupdate(item, index + 1)}
+                  ></i>
+                </td>
+                <td>
+                  <i
+                    type="submit"
+                    className="fa-sharp fa-solid fa-trash"
+                    onClick={() => handledelete(index)}
+                  ></i>
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
