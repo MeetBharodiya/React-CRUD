@@ -6,7 +6,9 @@ const ViewProfile = (prop) => {
 
   const {id} = useParams();
   const users = JSON.parse(localStorage.getItem("userdata"));
-  const user = users.find((e,index)=>index+1==id);
+  const user = users.find((e,index)=>
+  // eslint-disable-next-line
+  index+1==id);
   
 
   return (

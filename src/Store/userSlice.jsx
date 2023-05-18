@@ -33,6 +33,7 @@ const userSlice = createSlice({
       };
       let data = JSON.parse(localStorage.getItem("userdata"));
       data = data.map((item, i) => {
+        // eslint-disable-next-line
         if (i+1 == action.payload.index) {
           return user;
         } else {

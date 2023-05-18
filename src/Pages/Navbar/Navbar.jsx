@@ -1,12 +1,9 @@
 import React,{useEffect, useState} from "react";
 import {Link} from 'react-router-dom'
-import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { setFilter } from "../../Store/filterSlice";
 
 const Navbar = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const [filter,setFilter] = useState([])
 
 
